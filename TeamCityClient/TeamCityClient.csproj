@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2AB6448-187D-4368-AB94-AE3D78476677}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Azure.Store.Tools.TeamCity</RootNamespace>
+    <AssemblyName>Azure.Store.Tools.TeamCity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuildService.cs" />
+    <Compile Include="DataContracts\Build.cs" />
+    <Compile Include="DataContracts\BuildCancelRequest.cs" />
+    <Compile Include="DataContracts\BuildList.cs" />
+    <Compile Include="DataContracts\BuildTask.cs" />
+    <Compile Include="DataContracts\BuildTaskProperties.cs" />
+    <Compile Include="DataContracts\BuildTestOccurrence.cs" />
+    <Compile Include="DataContracts\BuildTestOccurrenceReferences.cs" />
+    <Compile Include="DataContracts\BuildTestOccurrencesSummary.cs" />
+    <Compile Include="DataContracts\BuildType.cs" />
+    <Compile Include="DataContracts\Property.cs" />
+    <Compile Include="DataContracts\RunningBuildInformation.cs" />
+    <Compile Include="Exceptions\BuildDequeuedException.cs" />
+    <Compile Include="IBuildService.cs" />
+    <Compile Include="Net\IWebRequestExecutor.cs" />
+    <Compile Include="Net\PreauthenticatedWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Net\WebRequestExecutor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
