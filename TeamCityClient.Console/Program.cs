@@ -22,9 +22,11 @@
 
             ConfigureLogger();
 
-            FindAllConfigurationsWithCertainParameterValue("8ae04749-b4da-4891-bb2d-d8efa6c490af", projectId);
+            //FindAllConfigurationsWithCertainParameterValue("8ae04749-b4da-4891-bb2d-d8efa6c490af", projectId);
             //FindAllConfigurationsWithCertainParameterValue("Buildr.CreateBranchWebSite.AccountUserName", projectId, true);            
-            //FindAllConfigurationsWithCertainParameterValue("Buildr.CreateBranchWebSite.AccountUserName", useParameKeyInsteadOfValue: true);            
+            //FindAllConfigurationsWithCertainParameterValue("Buildr.CreateBranchWebSite.AccountUserName", useParameKeyInsteadOfValue: true);    
+
+            FindAllConfigurationsWithACertainStepName("StyleCop");
 
             Console.WriteLine("{0}Press any key to exit..", Environment.NewLine);
             Console.ReadKey();
@@ -68,6 +70,34 @@
             }
 
             Log.Information("Parameter value {0} found in {1} configuration(s) out of {2} under project {3}.", paramValue, count, configurations.Count, projectId);
+        }
+
+        private static void FindAllConfigurationsWithACertainStepName(string stepName, string projectId = null)
+        {
+            if (string.IsNullOrEmpty(projectId))
+            {
+                projectId = "_Root";
+            }
+
+            var configurations = TeamCityClient.GetBuildConfigurations(bc => bc.ProjectRecursively(p => p.Id(projectId)));
+
+            int count = 0;
+            foreach (var config in configurations)
+            {
+                var configDetails = TeamCityClient.GetBuildConfiguration(c => c.Id(config.Id));
+
+                var steps = configDetails.Steps.Step.Where(p => p.Name.Contains(stepName) || p.Name.ToLowerInvariant().Contains(stepName.ToLowerInvariant()));
+
+                if (steps.Any())
+                {
+                    count++;
+                    string message = "Step with name containing '{0}' found in Configuration {1} (Id: {2}).";                   
+
+                    Log.Information(message, stepName, config.Name, config.Id, Environment.NewLine);
+                }
+            }
+
+            Log.Information("Step with name containing '{0}' found in {1} configuration(s) out of {2} under project {3}.", stepName, count, configurations.Count, projectId);
         }
     }
 }
